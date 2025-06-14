@@ -1,37 +1,124 @@
-# HW3_FC
+# Elastic Wave Reflection and Refraction
 
-# Objective: Visualization of Reflection and Refraction of Elastic Waves in a 1D Heterogeneous Elastic Medium
+## Objective
+Visualize the reflection and refraction of elastic waves in a 1D heterogeneous elastic medium, building upon the program constructed in the lab meeting.
 
-Building upon the program constructed together in the lab meeting, create a program that achieves the following:
+## System Description
+The simulation models a heterogeneous elastic medium consisting of 100 coupled oscillators with different material properties in two distinct regions.
 
 ## Requirements
 
-1. Simulate an elastic medium with 100 oscillators.
-2. The first 50 oscillators will have a mass `m1`, different from the mass `m2` of the next 50 oscillators.
-3. The first 50 springs will have an elastic constant `k1`, different from the constant `k2` of the next 50 springs.
-4. The right-hand end will be fixed (`etad=0`).
-5. At the left-hand end, a single "semi-wave" pulse of sinusoidal type will be introduced. This means a single semi-oscillation of harmonic type (`etas` starts to grow sinusoidally at `ti=0` until amplitude, then decreases to zero and remains at zero for the rest of the time).
-6. Visualize the dynamics of the pulse propagation towards the middle of the medium, the appearance of the reflected pulse, and the refracted pulse.
-7. Try to understand the relationship between the pulse propagation velocity and the quantities `m` and `k` specific to each medium.
+### Physical Setup
+1. **Medium Structure**: 100 oscillators total
+   - **First 50 oscillators**: Mass `m1`, connected by springs with constant `k1`
+   - **Next 50 oscillators**: Mass `m2`, connected by springs with constant `k2`
 
-## Implementation
+2. **Boundary Conditions**:
+   - **Right-hand end**: Fixed boundary (`eta_d = 0`)
+   - **Left-hand end**: Driven by sinusoidal pulse input
 
-To achieve the above requirements, you can use the following steps:
+3. **Input Signal**:
+   - Single "semi-wave" pulse of sinusoidal type
+   - `eta_s` grows sinusoidally from `t = 0` to maximum amplitude
+   - Then it decreases to zero and remains zero for the rest of the simulation
+   - Represents one half-period of harmonic oscillation
 
-1. Initialize the medium with 100 oscillators, where the first 50 have `m1` and `k1`, and the next 50 have `m2` and `k2`.
-2. Set the right-hand end to be fixed (`etad=0`).
-3. Introduce a single "semi-wave" pulse of sinusoidal type at the left-hand end.
-4. Simulate the propagation of the pulse towards the middle of the medium, observing the appearance of the reflected and refracted pulses.
-5. Analyze the relationship between the pulse propagation velocity and the quantities `m` and `k` specific to each medium.
+### Simulation Goals
+4. **Wave Propagation Visualization**:
+   - Pulse propagation toward the medium interface
+   - Formation and propagation of reflected pulse
+   - Formation and propagation of refracted (transmitted) pulse
 
-To visualize the dynamics, you can use a plotting library like `matplotlib` in Python or a similar visualization tool.
+5. **Analysis Requirements**:
+   - Understand the relationship between wave velocity and material properties (`m` and `k`)
+   - Observe wave behavior at the material interface
+   - Analyze reflection and transmission coefficients
 
-The key aspects to consider in the implementation are:
+## Implementation Steps
 
-- Defining the appropriate initial conditions and boundary conditions for the problem.
-- Implementing the equations of motion for the oscillators, taking into account the different masses and spring constants.
-- Handling the reflection and refraction of the pulse at the interface between the two media.
-- Visualizing the propagation of the pulse, the reflected pulse, and the refracted pulse over time.
-- Analyzing the relationship between the pulse propagation velocity and the quantities `m` and `k` specific to each medium.
+### 1. System Initialization
+- Create a 100-oscillator array with heterogeneous properties
+- Define the material interface at oscillator 50
+- Set appropriate initial conditions (all oscillators at rest)
 
-By completing this task, you will gain a better understanding of the behavior of elastic waves in a heterogeneous medium and the phenomena of reflection and refraction.
+### 2. Boundary Conditions Setup
+- **Left boundary**: Implement sinusoidal pulse driver
+- **Right boundary**: Fix displacement (`eta_d = 0`)
+
+### 3. Pulse Generation
+- Generate a single semi-wave sinusoidal pulse
+- Control pulse duration and amplitude
+- Ensure smooth pulse injection
+
+### 4. Dynamics Simulation
+- Implement equations of motion for coupled oscillators
+- Account for different masses and spring constants
+- Use an appropriate numerical integration method
+- Handle interface conditions properly
+
+### 5. Visualization
+- Real-time animation of oscillator displacements
+- Track pulse propagation, reflection, and refraction
+- Plot displacement vs. position over time
+- Include material property indicators
+
+### 6. Analysis
+- Calculate wave velocities in each medium
+- Determine reflection and transmission coefficients
+- Verify theoretical relationships: `v = √(k/m)`
+
+## Key Physics Concepts
+
+### Wave Velocity
+The wave velocity in each medium is given by:
+```
+v₁ = √(k₁/m₁)  (first medium)
+v₂ = √(k₂/m₂)  (second medium)
+```
+
+### Interface Phenomena
+- **Reflection**: Portion of the wave bounces back into the first medium
+- **Refraction**: Portion of the wave transmits into a second medium
+- **Impedance matching**: Determines reflection/transmission ratios
+
+### Theoretical Predictions
+- Reflection coefficient: `R = (Z₂ - Z₁)/(Z₂ + Z₁)`
+- Transmission coefficient: `T = 2Z₂/(Z₂ + Z₁)`
+- Where `Z = √(mk)` is the mechanical impedance
+
+## Expected Observations
+
+### Visual Results
+- Initial pulse propagation in the first medium
+- Partial reflection at the interface (pulse traveling leftward)
+- Partial transmission into a second medium (possibly different velocity)
+- Multiple reflections from the fixed right boundary
+
+### Quantitative Analysis
+- Measure wave velocities in both media
+- Compare with theoretical predictions
+- Analyze amplitude ratios of reflected/transmitted waves
+
+## Implementation Considerations
+
+### Numerical Aspects
+- Choose an appropriate time step for stability
+- Handle discontinuity at the material interface
+- Ensure energy conservation (within numerical limits)
+
+### Visualization Features
+- Color coding for different media regions
+- Real-time displacement plotting
+- Optional: Energy density visualization
+- Interface position marking
+
+### Parameter Selection
+- Choose `m₁`, `m₂`, `k₁`, `k₂` for clear wave behavior demonstration
+- Pulse frequency should be appropriate for the system response
+- Simulation duration should capture multiple reflections
+
+## Success Criteria
+- Clear visualization of incident, reflected, and transmitted pulses
+- Quantitative agreement with theoretical wave velocities
+- Demonstration of wave impedance effects at the interface
+- Understanding of the relationship between material properties and wave behavior
